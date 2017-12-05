@@ -33,7 +33,8 @@ public class PrincipalS extends javax.swing.JFrame {
     ManagerSoViaticos manager_soviaticos;
     visSolicitudViaticos s;
     DefaultTableModel modelo;
-    CrearPDF pdf =new CrearPDF(); 
+    CrearPDF pdf =new CrearPDF();
+    boolean limpiar=false;
     /**
      * Creates new form PrincipalS
      */
@@ -77,6 +78,7 @@ public class PrincipalS extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnAddInventario = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         tablonsolicitud = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
@@ -243,6 +245,15 @@ public class PrincipalS extends javax.swing.JFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IEE.png"))); // NOI18N
 
+        jButton1.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/solicitud.png"))); // NOI18N
+        jButton1.setText("Imprimir solicitud");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -252,7 +263,9 @@ public class PrincipalS extends javax.swing.JFrame {
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnAddInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddInventario, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -262,7 +275,9 @@ public class PrincipalS extends javax.swing.JFrame {
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(btnAddInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(330, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
         solicitudviaticos1.add(jPanel1);
@@ -1265,6 +1280,24 @@ public class PrincipalS extends javax.swing.JFrame {
         } else {
         }
     }//GEN-LAST:event_btnregresarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int fila=-1;
+        limpiar=false;
+        String id=null;
+        try{
+            fila=tablasolic.getSelectedRow();
+            tablasolic.clearSelection();
+            CrearPDF pdf=new CrearPDF();
+            if(fila>=0){
+                id=tablasolic.getValueAt(fila, 0).toString();
+                pdf.generarPDFSolicitud(id);
+            }
+        }catch(Exception e){
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     public void Consultar() {
         if (i == 1) {
             int i = tablon.getSelectedRow();
@@ -1412,6 +1445,7 @@ public class PrincipalS extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemAnterior;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JMenuItem itemSiguiente;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;

@@ -147,6 +147,13 @@ public class CrearPDF {
         //Label para firmar
         cb.setTextMatrix(175,225);
         cb.showText("____________________________");
+        //director generar
+        //Presidente base de datos
+        cb.setFontAndSize(bf, 12);
+        cb.setTextMatrix(180,175);
+        datos=conexion.acceder("select * from director_general");
+        cb.showText(datos.get(0));
+        //
         cb.endText();
         document.close();
             Desktop.getDesktop().open(f);
@@ -275,6 +282,11 @@ public class CrearPDF {
         //Label para firmar
         cb.setTextMatrix(175,225);
         cb.showText("____________________________");
+        //Presidente base de datos
+        cb.setFontAndSize(bf, 12);
+        cb.setTextMatrix(180,175);
+        datos=conexion.acceder("select * from director_general");
+        cb.showText(datos.get(0));
         cb.endText();
         document.close();
             Desktop.getDesktop().open(f);
