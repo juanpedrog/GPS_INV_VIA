@@ -24,6 +24,7 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
      public int varida[];
      Conexion cbd=new Conexion();
     Connection cn=cbd.getConexion();
+    public static boolean imprimirSolicitud=false;
     /**
      * Creates new form addSolicitudViaticos
      */
@@ -267,10 +268,12 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
        
-          try{
+        try{
             verificar_excepcion=true;
             validarDatos(true,"");
-            insertar_Solicitud();
+            if(cmb_Vehiculo.getSelectedIndex()==0){
+                insertar_Solicitud();
+            }
         }catch(ExceptionDatosIncompletos e){
             if(verificar_excepcion)JOptionPane.showMessageDialog(this, e.getMessage());
             return;
@@ -293,10 +296,10 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
             if(chb_Pernoctado.isSelected()){
                 pernoctado="Si";
             }
-            System.out.print("insert into solicitud (Fecha_Salida,Lugar,Nombre,Actividad,Pernoctado,Vehiculo,Puesto,Fecha_Llegada,Estado,Reporte) values('"+fecha_Salida+"','"+txt_Lugar.getText()+"'"
+            System.out.print("insert into Solicitud (Fecha_Salida,Lugar,Nombre,Actividad,Pernoctado,Vehiculo,Puesto,Fecha_Llegada,Estado,Reporte) values('"+fecha_Salida+"','"+txt_Lugar.getText()+"'"
                 + ",'"+txt_Nombre.getText()+"','"+txt_Actividad.getText()+"','"+pernoctado+"','"+cmb_Vehiculo.getSelectedItem().toString()+"'"
                 + ",'"+txt_Puesto.getText()+"','"+fecha_Llegada+"','P','0')");
-            boolean insersion=conexion.ejecutar("insert into solicitud (Fecha_Salida,Lugar,Nombre,Actividad,Pernoctado,Vehiculo,Puesto,Fecha_Llegada,Estado,Reporte) values('"+fecha_Salida+"','"+txt_Lugar.getText()+"'"
+            boolean insersion=conexion.ejecutar("insert into Solicitud (Fecha_Salida,Lugar,Nombre,Actividad,Pernoctado,Vehiculo,Puesto,Fecha_Llegada,Estado,Reporte) values('"+fecha_Salida+"','"+txt_Lugar.getText()+"'"
                 + ",'"+txt_Nombre.getText()+"','"+txt_Actividad.getText()+"','"+pernoctado+"','"+cmb_Vehiculo.getSelectedItem().toString()+"'"
                 + ",'"+txt_Puesto.getText()+"','"+fecha_Llegada+"','P','0')");
             if(insersion){
@@ -336,13 +339,24 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
                 return;
             }
         }
-        if(cmb_Vehiculo.getSelectedIndex()==0){
+        if(chb_Pernoctado.isSelected()){
+            if(date_Salida.getDate().getYear()==date_Llegada.getDate().getYear()
+                    && date_Salida.getDate().getMonth()==date_Llegada.getDate().getMonth()
+                    && date_Salida.getDate().getDate()==date_Llegada.getDate().getDate()){
+                cad+="\nNo se puede seleccionar pernoctadar para una fecha de salida y de llagada igual";
+            }
+            
+        }
+        /*if(cmb_Vehiculo.getSelectedIndex()==0){
             if(cad.equals("")){
                 cad+="-Vehiculo no seleccionado";
             }
             else{
                 cad+="\n-Vehiculo no seleccionado";
             }
+        }*/
+        if(cmb_Vehiculo.getSelectedIndex()!=0){
+            new descVehiculo().setVisible(true);
         }
         if(txt_Actividad.getText().equals("")){
             if(cad.equals("")){
@@ -426,7 +440,6 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
