@@ -79,6 +79,7 @@ public class PrincipalS extends javax.swing.JFrame {
         btnAddInventario = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         tablonsolicitud = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
@@ -254,6 +255,14 @@ public class PrincipalS extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        jButton2.setText("Actualizar Director General");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -264,6 +273,7 @@ public class PrincipalS extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAddInventario, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -277,7 +287,9 @@ public class PrincipalS extends javax.swing.JFrame {
                 .addComponent(btnAddInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(290, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(252, Short.MAX_VALUE))
         );
 
         solicitudviaticos1.add(jPanel1);
@@ -1298,6 +1310,12 @@ public class PrincipalS extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String nuevo=JOptionPane.showInputDialog("Inserte el nombre del nuevo director general");
+        cbd.ejecutar("update Director_General set Nombre='"+nuevo+"'");
+    }//GEN-LAST:event_jButton2ActionPerformed
     public void Consultar() {
         if (i == 1) {
             int i = tablon.getSelectedRow();
@@ -1446,6 +1464,7 @@ public class PrincipalS extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JMenuItem itemSiguiente;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
