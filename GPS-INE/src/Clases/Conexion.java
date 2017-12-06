@@ -33,7 +33,7 @@ public class Conexion {
          try {
             Class.forName("com.mysql.jdbc.Driver");
             //con = DriverManager.getConnection("jdbc:mysql://192.168.1.66:3306/ine",usuario, contra);
-            con = DriverManager.getConnection("jdbc:mysql://localhost/Viaticos",usuario, contra);
+            con = DriverManager.getConnection("jdbc:mysql://localhost/ine",usuario, contra);
             System.out.println("Conexion Correcta");
          } catch (SQLException ex) {
            // throw new SQLException(ex);

@@ -21,6 +21,7 @@ import java.sql.Statement;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,13 +29,15 @@ import javax.swing.table.DefaultTableModel;
  * @author usuario
  */
 public class PrincipalS extends javax.swing.JFrame {
-    Conexion cbd=new Conexion();
-    Connection cn=cbd.getConexion();
+
+    Conexion cbd = new Conexion();
+    Connection cn = cbd.getConexion();
     ManagerSoViaticos manager_soviaticos;
     visSolicitudViaticos s;
     DefaultTableModel modelo;
-    CrearPDF pdf =new CrearPDF();
-    boolean limpiar=false;
+    CrearPDF pdf = new CrearPDF();
+    boolean limpiar = false;
+
     /**
      * Creates new form PrincipalS
      */
@@ -47,14 +50,15 @@ public class PrincipalS extends javax.swing.JFrame {
         manager_soviaticos = new ManagerSoViaticos();
         //tablasolic.setModel(manager_soviaticos.getTasol());
         tablasolic.setModel(manager_soviaticos.getTasol());
-         tablon.setModel(manager_soviaticos.SolicitudP());
-         btnmontotablon.setVisible(false);
+        tablon.setModel(manager_soviaticos.SolicitudP());
+        btnmontotablon.setVisible(false);
         btnoficomi.setVisible(false);
         btnofivia.setVisible(false);
-        
+
     }
-    
-    int i, c,folio;
+
+    int i, c, folio;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,6 +120,7 @@ public class PrincipalS extends javax.swing.JFrame {
         btneliminaractividad = new javax.swing.JButton();
         btngenerarreporte = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         btnregresar = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -376,6 +381,11 @@ public class PrincipalS extends javax.swing.JFrame {
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/quitar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel20.add(btnCancelar);
         btnCancelar.setBounds(30, 225, 150, 41);
 
@@ -403,7 +413,7 @@ public class PrincipalS extends javax.swing.JFrame {
 
         btnoficomi.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnoficomi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/oficio.png"))); // NOI18N
-        btnoficomi.setText("OFICIO DE COMISIÒN");
+        btnoficomi.setText("OFICIO DE COMISIÓN");
         btnoficomi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnoficomiActionPerformed(evt);
@@ -423,7 +433,7 @@ public class PrincipalS extends javax.swing.JFrame {
 
         btnofivia.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnofivia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/oficio.png"))); // NOI18N
-        btnofivia.setText("OFICIO DE VIÀTICOS");
+        btnofivia.setText("OFICIO DE VIÁTICOS");
         btnofivia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnofiviaActionPerformed(evt);
@@ -502,14 +512,14 @@ public class PrincipalS extends javax.swing.JFrame {
         jLabel26.setBounds(16, 29, 193, 83);
 
         btnnuevaactividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/agregar.png"))); // NOI18N
-        btnnuevaactividad.setText("Nueva Actividad");
+        btnnuevaactividad.setText("Añadir Actividad");
         btnnuevaactividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnnuevaactividadActionPerformed(evt);
             }
         });
         jPanel22.add(btnnuevaactividad);
-        btnnuevaactividad.setBounds(40, 110, 170, 40);
+        btnnuevaactividad.setBounds(30, 180, 190, 40);
 
         cmbsoliaceptadas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Solicitudes Aceptadas", "Solicitudes Finalizadas" }));
         cmbsoliaceptadas.addItemListener(new java.awt.event.ItemListener() {
@@ -518,17 +528,17 @@ public class PrincipalS extends javax.swing.JFrame {
             }
         });
         jPanel22.add(cmbsoliaceptadas);
-        cmbsoliaceptadas.setBounds(30, 110, 180, 40);
+        cmbsoliaceptadas.setBounds(30, 120, 190, 40);
 
         btnconsultarreporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/consultar.png"))); // NOI18N
-        btnconsultarreporte.setText("Consultar Reporte");
+        btnconsultarreporte.setText("Consultar Informe");
         btnconsultarreporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnconsultarreporteActionPerformed(evt);
             }
         });
         jPanel22.add(btnconsultarreporte);
-        btnconsultarreporte.setBounds(30, 170, 190, 40);
+        btnconsultarreporte.setBounds(30, 180, 190, 40);
 
         btneliminaractividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/quitar.png"))); // NOI18N
         btneliminaractividad.setText("Eliminar Actividad");
@@ -538,17 +548,17 @@ public class PrincipalS extends javax.swing.JFrame {
             }
         });
         jPanel22.add(btneliminaractividad);
-        btneliminaractividad.setBounds(30, 170, 190, 40);
+        btneliminaractividad.setBounds(30, 240, 190, 40);
 
         btngenerarreporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/oficio.png"))); // NOI18N
-        btngenerarreporte.setText("Generar reporte");
+        btngenerarreporte.setText("Generar informe");
         btngenerarreporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btngenerarreporteActionPerformed(evt);
             }
         });
         jPanel22.add(btngenerarreporte);
-        btngenerarreporte.setBounds(30, 170, 190, 40);
+        btngenerarreporte.setBounds(30, 180, 190, 40);
 
         btnguardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/guardarsol.png"))); // NOI18N
         btnguardar.setText("Guardar");
@@ -558,7 +568,11 @@ public class PrincipalS extends javax.swing.JFrame {
             }
         });
         jPanel22.add(btnguardar);
-        btnguardar.setBounds(30, 230, 190, 40);
+        btnguardar.setBounds(30, 290, 190, 40);
+
+        jLabel3.setText("Actividades Realizadas");
+        jPanel22.add(jLabel3);
+        jLabel3.setBounds(80, 120, 120, 14);
 
         informe.add(jPanel22);
         jPanel22.setBounds(1100, 130, 240, 540);
@@ -648,7 +662,10 @@ public class PrincipalS extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(solicviaticos, javax.swing.GroupLayout.DEFAULT_SIZE, 1354, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(solicviaticos, javax.swing.GroupLayout.DEFAULT_SIZE, 1334, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -660,23 +677,23 @@ public class PrincipalS extends javax.swing.JFrame {
 
     private void itemAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAnteriorActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_itemAnteriorActionPerformed
 
     private void itemSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSiguienteActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_itemSiguienteActionPerformed
 
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
         // TODO add your handling code here:
-        Object[] botones = {"Confirmar","Cancelar"};
-        int opcion = JOptionPane.showOptionDialog(this,"¿Salir del Sistema?", "Confirmación",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, botones, botones[0]);
+        Object[] botones = {"Confirmar", "Cancelar"};
+        int opcion = JOptionPane.showOptionDialog(this, "¿Salir del Sistema?", "Confirmación",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, botones, botones[0]);
 
-        if(opcion == 0){
+        if (opcion == 0) {
             System.exit(0);
-        }else if(opcion == 1){
+        } else if (opcion == 1) {
             //Cerrar sesion
         }
     }//GEN-LAST:event_itemSalirActionPerformed
@@ -684,50 +701,49 @@ public class PrincipalS extends javax.swing.JFrame {
     private void menuPermisosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPermisosActionPerformed
         // TODO add your handling code here:
         /*if((manager_permisos.alta_permisos(Username) && manager_permisos.baja_permisos(Username)) || manager_permisos.consulta_permisos(Username)){
-            if(manager_permisos.alta_permisos(Username) && manager_permisos.baja_permisos(Username)){
-                Ventana_permisos_puesto ob = new Ventana_permisos_puesto(this, true);
-                ob.setVisible(true);
-            }else{
-                Ventana_permisos_puesto_consulta ob = new Ventana_permisos_puesto_consulta(this, true);
-                ob.setVisible(true);
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Usted no tiene acceso a los permisos estaticos de los puestos.");
-        }*/
+         if(manager_permisos.alta_permisos(Username) && manager_permisos.baja_permisos(Username)){
+         Ventana_permisos_puesto ob = new Ventana_permisos_puesto(this, true);
+         ob.setVisible(true);
+         }else{
+         Ventana_permisos_puesto_consulta ob = new Ventana_permisos_puesto_consulta(this, true);
+         ob.setVisible(true);
+         }
+         }else{
+         JOptionPane.showMessageDialog(null, "Usted no tiene acceso a los permisos estaticos de los puestos.");
+         }*/
     }//GEN-LAST:event_menuPermisosActionPerformed
 
     private void menuPuestoAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPuestoAreaActionPerformed
         // TODO add your handling code here:
         /*Ventana_Puestos_Area ob = new Ventana_Puestos_Area(this, true);
-        ob.setVisible(true);*/
+         ob.setVisible(true);*/
     }//GEN-LAST:event_menuPuestoAreaActionPerformed
 
     private void MenuSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSolicitudActionPerformed
         // TODO add your handling code here:
        /* if((manager_permisos.alta_permisos(Username) && manager_permisos.baja_permisos(Username)) || manager_permisos.consulta_permisos(Username)){
-            if(manager_permisos.alta_permisos(Username) && manager_permisos.baja_permisos(Username)){
-                Ventana_permisosSolicitud ob = new Ventana_permisosSolicitud(this, true);
-                ob.setVisible(true);
-            }else{
-                Ventana_permisosSolicitud_consulta ob = new Ventana_permisosSolicitud_consulta(this, true);
-                ob.setVisible(true);
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Usted no tiene acceso a los permisos de las solicitudes.");
-        }*/
+         if(manager_permisos.alta_permisos(Username) && manager_permisos.baja_permisos(Username)){
+         Ventana_permisosSolicitud ob = new Ventana_permisosSolicitud(this, true);
+         ob.setVisible(true);
+         }else{
+         Ventana_permisosSolicitud_consulta ob = new Ventana_permisosSolicitud_consulta(this, true);
+         ob.setVisible(true);
+         }
+         }else{
+         JOptionPane.showMessageDialog(null, "Usted no tiene acceso a los permisos de las solicitudes.");
+         }*/
     }//GEN-LAST:event_MenuSolicitudActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         tablasolic.setModel(manager_soviaticos.getTasol());
-        if(combotablon.getSelectedIndex()==0){
-         tablon.setModel(manager_soviaticos.SolicitudP());}
-        else if(combotablon.getSelectedIndex()==1){
-         tablon.setModel(manager_soviaticos.SolicitudA());   
+        if (combotablon.getSelectedIndex() == 0) {
+            tablon.setModel(manager_soviaticos.SolicitudP());
+        } else if (combotablon.getSelectedIndex() == 1) {
+            tablon.setModel(manager_soviaticos.SolicitudA());
+        } else if (combotablon.getSelectedIndex() == 2) {
+            tablon.setModel(manager_soviaticos.SolicitudC());
         }
-        else if(combotablon.getSelectedIndex()==2){
-         tablon.setModel(manager_soviaticos.SolicitudC());   
-        }
-        
+
     }//GEN-LAST:event_formWindowActivated
 
     private void btnAddInventario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddInventario2ActionPerformed
@@ -737,14 +753,14 @@ public class PrincipalS extends javax.swing.JFrame {
 
     private void txtbusquedasoliKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbusquedasoliKeyPressed
         // TODO add your handling code here:
-         
+
 
     }//GEN-LAST:event_txtbusquedasoliKeyPressed
 
     private void txtbusquedasoliKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbusquedasoliKeyReleased
         // TODO add your handling code here:
         if (i == 1) {
-           modelo = new DefaultTableModel() {
+            modelo = new DefaultTableModel() {
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
@@ -757,7 +773,7 @@ public class PrincipalS extends javax.swing.JFrame {
             this.tablon.setModel(modelo);
             try {
                 Statement sentencia = cn.createStatement();
-                ResultSet rs = sentencia.executeQuery("SELECT O.Folio, O.Monto, S.Fecha_salida, S.Fecha_llegada,S.Lugar FROM solicitud S, oficio_comision O WHERE S.Estado = 'A' AND S.idSolicitud = O.Solicitud_idSolicitud AND (O.Folio LIKE '%" + txtbusquedasoli.getText() + "%'"
+                ResultSet rs = sentencia.executeQuery("SELECT O.Folio, O.Monto, S.Fecha_salida, S.Fecha_llegada,S.Lugar FROM solicitud_viatico S, oficio_comision O WHERE S.Estado = 'A' AND S.idSolicitud = O.Solicitud_idSolicitud AND (O.Folio LIKE '%" + txtbusquedasoli.getText() + "%'"
                         + "OR O.Monto LIKE '%" + txtbusquedasoli.getText() + "%' OR S.Fecha_salida LIKE '%" + txtbusquedasoli.getText() + "%' OR S.Fecha_llegada LIKE '%" + txtbusquedasoli.getText() + "%'"
                         + "OR S.Lugar LIKE '%" + txtbusquedasoli.getText() + "%') ");
 
@@ -774,10 +790,10 @@ public class PrincipalS extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
 
-            } 
+            }
         }
         if (i == 2) {
-           modelo = new DefaultTableModel() {
+            modelo = new DefaultTableModel() {
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
@@ -792,7 +808,7 @@ public class PrincipalS extends javax.swing.JFrame {
             try {
                 Statement sentencia = cn.createStatement();
 
-                ResultSet rs = sentencia.executeQuery("SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud WHERE Estado = 'C' AND (idSolicitud LIKE '%" + txtbusquedasoli.getText() + "%'"
+                ResultSet rs = sentencia.executeQuery("SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud_viatico WHERE Estado = 'C' AND (idSolicitud LIKE '%" + txtbusquedasoli.getText() + "%'"
                         + "OR Nombre LIKE '%" + txtbusquedasoli.getText() + "%' OR Puesto LIKE '%" + txtbusquedasoli.getText() + "%' OR Fecha_salida LIKE '%" + txtbusquedasoli.getText() + "%' OR Fecha_llegada LIKE '%" + txtbusquedasoli.getText() + "%'"
                         + "OR Lugar LIKE '%" + txtbusquedasoli.getText() + "%') ");
 
@@ -826,11 +842,10 @@ public class PrincipalS extends javax.swing.JFrame {
             modelo.addColumn("Lugar");
             this.tablon.setModel(modelo);
             try {
-       
 
                 Statement sentencia = cn.createStatement();
 
-                ResultSet rs = sentencia.executeQuery("SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud WHERE Estado = 'P' AND (idSolicitud LIKE '%" + txtbusquedasoli.getText() + "%'"
+                ResultSet rs = sentencia.executeQuery("SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud_viatico WHERE Estado = 'P' AND (idSolicitud LIKE '%" + txtbusquedasoli.getText() + "%'"
                         + "OR Nombre LIKE '%" + txtbusquedasoli.getText() + "%' OR Puesto LIKE '%" + txtbusquedasoli.getText() + "%' OR Fecha_salida LIKE '%" + txtbusquedasoli.getText() + "%' OR Fecha_llegada LIKE '%" + txtbusquedasoli.getText() + "%'"
                         + "OR Lugar LIKE '%" + txtbusquedasoli.getText() + "%') ");
 
@@ -853,24 +868,25 @@ public class PrincipalS extends javax.swing.JFrame {
     }//GEN-LAST:event_txtbusquedasoliKeyReleased
 
     private void btnAddInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddInventarioActionPerformed
-         addSolicitudViaticos asv = new addSolicitudViaticos(this, true);
+        addSolicitudViaticos asv = new addSolicitudViaticos(this, true);
         asv.setVisible(true);
     }//GEN-LAST:event_btnAddInventarioActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-         // TODO add your handling code here:
-         txtobvia.enable(false);
+        // TODO add your handling code here:
+        txtobvia.enable(false);
         txtobveh.enable(false);
         btnregresar.setVisible(false);
         btnguardar.setVisible(false);
         btnconsultarreporte.setVisible(false);
         btnnuevaactividad.setVisible(false);
         btneliminaractividad.setVisible(false);
-         i = 0;
-         c = 0;
-         Solicitud("SELECT O.Folio, S.Nombre FROM solicitud S, oficio_comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud AND O.Monto != 0");
-         //tablasolic.setModel(manager_soviaticos.getTasol());
-         //tablon.setModel(manager_soviaticos.SolicitudP());
+        jLabel3.setVisible(false);
+        i = 0;
+        c = 0;
+        Solicitud("SELECT O.Folio, S.Nombre FROM solicitud_viatico S, oficio_comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud AND O.Monto != 0");
+        //tablasolic.setModel(manager_soviaticos.getTasol());
+        //tablon.setModel(manager_soviaticos.SolicitudP());
     }//GEN-LAST:event_formWindowOpened
 
     private void btnconsultartablonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconsultartablonActionPerformed
@@ -883,7 +899,6 @@ public class PrincipalS extends javax.swing.JFrame {
             Consultar();
             c = 0;
         }
-        s.setVisible(true);
     }//GEN-LAST:event_btnconsultartablonActionPerformed
 
     private void btnmontotablonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmontotablonActionPerformed
@@ -892,7 +907,7 @@ public class PrincipalS extends javax.swing.JFrame {
         if (k >= 0) {
             String folio = tablon.getValueAt(k, 0).toString();
             try {
-              
+
                 Statement sentencia = cn.createStatement();
                 String valor = javax.swing.JOptionPane.showInputDialog("Asignar monto");
 
@@ -900,8 +915,12 @@ public class PrincipalS extends javax.swing.JFrame {
 
                 } else {
                     float monto = Float.parseFloat(valor);
-                    sentencia.executeUpdate("UPDATE oficio_comision SET Monto = " + monto + "WHERE(Folio =" + folio + ")");
-                    javax.swing.JOptionPane.showMessageDialog(null, "Monto Asignado");
+                    if (monto < 0) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "Monto no valido");
+                    } else {
+                        sentencia.executeUpdate("UPDATE oficio_comision SET Monto = " + monto + "WHERE(Folio =" + folio + ")");
+                        javax.swing.JOptionPane.showMessageDialog(null, "Monto Asignado");
+                    }
                 }
             } catch (SQLException ex) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
@@ -913,12 +932,12 @@ public class PrincipalS extends javax.swing.JFrame {
         } else {
             javax.swing.JOptionPane.showMessageDialog(null, "Seleccionar solicitud");
         }
-        int filas = tablon.getRowCount();
-        if (filas != 0) {
-            for (int j = 0; filas > j; j++) {
-                modelo.removeRow(0);
-            }
-        }
+        /*int filas = tablon.getRowCount();
+         if (filas != 0) {
+         for (int j = 0; filas > j; j++) {
+         modelo.removeRow(0);
+         }
+         }*/
         tablon.setModel(manager_soviaticos.SolicitudA());
     }//GEN-LAST:event_btnmontotablonActionPerformed
 
@@ -929,7 +948,6 @@ public class PrincipalS extends javax.swing.JFrame {
             int id = Integer.parseInt(tablon.getValueAt(k, 0).toString());
             Calendar calendar = Calendar.getInstance();
             try {
-                
                 String total = "";
                 Statement sentencia = cn.createStatement();
                 ResultSet rs0 = sentencia.executeQuery("SELECT COUNT(*) as Folio FROM oficio_comision");
@@ -959,26 +977,27 @@ public class PrincipalS extends javax.swing.JFrame {
                     folio = Integer.parseInt(valor);
                 }
                 sentencia.execute("INSERT INTO oficio_comision VALUES(" + folio + "," + id + "," + 0.00 + ")");
-                sentencia.executeUpdate("UPDATE solicitud SET Estado = 'A' WHERE (idSolicitud = '" + id + "')");
+                sentencia.executeUpdate("UPDATE solicitud_viatico SET Estado = 'A', Motivo = '' WHERE (idSolicitud = '" + id + "')");
                 javax.swing.JOptionPane.showMessageDialog(null, "Solicitud aceptada");
 
             } catch (SQLException ex) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta o folio ya asignado");
 
-            }/*catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }*/ //fin del catch
+            } /*catch (ClassNotFoundException e) {
+             e.printStackTrace();
+             } //fin del catch*/
 
         } else {
             javax.swing.JOptionPane.showMessageDialog(null, "Seleccionar solicitud");
         }
-        int filas = tablon.getRowCount();
-        if (filas != 0) {
-            for (int j = 0; filas > j; j++) {
-                modelo.removeRow(0);
-            }
+        /*int filas = tablon.getRowCount();
+         if (filas != 0) {
+         for (int j = 0; filas > j; j++) {
+         modelo.removeRow(0);
 
-        }
+         }
+
+         }*/
         if (i == 0) {
             tablon.setModel(manager_soviaticos.SolicitudP());
         } else {
@@ -992,6 +1011,127 @@ public class PrincipalS extends javax.swing.JFrame {
 
     private void txtbusquedasoli1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbusquedasoli1KeyReleased
         // TODO add your handling code here:
+        if (i == 1) {
+            modelo = new DefaultTableModel() {
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return false;
+                }
+            };
+            modelo.addColumn("Folio");
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Monto");
+            modelo.addColumn("Fecha de salida");
+            modelo.addColumn("Fecha de llegada");
+            modelo.addColumn("Lugar");
+            this.tablon.setModel(modelo);
+            try {
+
+                Statement sentencia = cn.createStatement();
+
+                ResultSet rs = sentencia.executeQuery("SELECT O.Folio, S.Nombre, O.Monto, S.Fecha_salida, S.Fecha_llegada,S.Lugar FROM solicitud_viatico S, oficio_comision O WHERE S.Estado = 'A' AND S.idSolicitud = O.Solicitud_idSolicitud AND (O.Folio LIKE '%" + txtbusquedasoli1.getText() + "%'"
+                        + "OR S.Nombre LIKE '%" + txtbusquedasoli1.getText() + "%' OR O.Monto LIKE '%" + txtbusquedasoli1.getText() + "%' OR S.Fecha_salida LIKE '%" + txtbusquedasoli1.getText() + "%' OR S.Fecha_llegada LIKE '%" + txtbusquedasoli1.getText() + "%'"
+                        + "OR S.Lugar LIKE '%" + txtbusquedasoli1.getText() + "%') ");
+
+                String solicitud[] = new String[6];
+                while (rs.next()) {
+                    solicitud[0] = rs.getString("Folio");
+                    solicitud[1] = rs.getString("Nombre");
+                    solicitud[2] = rs.getString("Monto");
+                    solicitud[3] = rs.getString("Fecha_salida");
+                    solicitud[4] = rs.getString("Fecha_llegada");
+                    solicitud[5] = rs.getString("Lugar");
+                    modelo.addRow(solicitud);
+                }
+
+            } catch (SQLException ex) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
+
+            } /*catch (ClassNotFoundException e) {
+             e.printStackTrace();
+             }//fin del catch*/
+
+        }
+        if (i == 2) {
+            modelo = new DefaultTableModel() {
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return false;
+                }
+            };
+            modelo.addColumn("ID");
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Puesto");
+            modelo.addColumn("Fecha de salida");
+            modelo.addColumn("Fecha de llegada");
+            modelo.addColumn("Lugar");
+            this.tablon.setModel(modelo);
+            try {
+
+                Statement sentencia = cn.createStatement();
+
+                ResultSet rs = sentencia.executeQuery("SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud_viatico WHERE Estado = 'C' AND (idSolicitud LIKE '%" + txtbusquedasoli1.getText() + "%'"
+                        + "OR Nombre LIKE '%" + txtbusquedasoli1.getText() + "%' OR Puesto LIKE '%" + txtbusquedasoli1.getText() + "%' OR Fecha_salida LIKE '%" + txtbusquedasoli1.getText() + "%' OR Fecha_llegada LIKE '%" + txtbusquedasoli1.getText() + "%'"
+                        + "OR Lugar LIKE '%" + txtbusquedasoli1.getText() + "%') ");
+
+                String solicitud[] = new String[6];
+                while (rs.next()) {
+                    solicitud[0] = rs.getString("idSolicitud");
+                    solicitud[1] = rs.getString("Nombre");
+                    solicitud[2] = rs.getString("Puesto");
+                    solicitud[3] = rs.getString("Fecha_salida");
+                    solicitud[4] = rs.getString("Fecha_llegada");
+                    solicitud[5] = rs.getString("Lugar");
+                    modelo.addRow(solicitud);
+                }
+
+            } catch (SQLException ex) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
+
+            } /*catch (ClassNotFoundException e) {
+             e.printStackTrace();
+             }//fin del catch*/
+
+        }
+        if (i == 0) {
+            modelo = new DefaultTableModel() {
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return false;
+                }
+            };
+            modelo.addColumn("ID");
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Puesto");
+            modelo.addColumn("Fecha de salida");
+            modelo.addColumn("Fecha de llegada");
+            modelo.addColumn("Lugar");
+            this.tablon.setModel(modelo);
+            try {
+
+                Statement sentencia = cn.createStatement();
+
+                ResultSet rs = sentencia.executeQuery("SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud_viatico WHERE Estado = 'P' AND (idSolicitud LIKE '%" + txtbusquedasoli1.getText() + "%'"
+                        + "OR Nombre LIKE '%" + txtbusquedasoli1.getText() + "%' OR Puesto LIKE '%" + txtbusquedasoli1.getText() + "%' OR Fecha_salida LIKE '%" + txtbusquedasoli1.getText() + "%' OR Fecha_llegada LIKE '%" + txtbusquedasoli1.getText() + "%'"
+                        + "OR Lugar LIKE '%" + txtbusquedasoli1.getText() + "%') ");
+
+                String solicitud[] = new String[6];
+                while (rs.next()) {
+                    solicitud[0] = rs.getString("idSolicitud");
+                    solicitud[1] = rs.getString("Nombre");
+                    solicitud[2] = rs.getString("Puesto");
+                    solicitud[3] = rs.getString("Fecha_salida");
+                    solicitud[4] = rs.getString("Fecha_llegada");
+                    solicitud[5] = rs.getString("Lugar");
+                    modelo.addRow(solicitud);
+                }
+
+            } catch (SQLException ex) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
+
+            } /*catch (ClassNotFoundException e) {
+             e.printStackTrace();
+             }//fin del catch*/
+
+        }
+
     }//GEN-LAST:event_txtbusquedasoli1KeyReleased
 
     private void combotablonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combotablonItemStateChanged
@@ -999,6 +1139,7 @@ public class PrincipalS extends javax.swing.JFrame {
         switch (combotablon.getSelectedIndex()) {
             case 0: {
                 btnmontotablon.setVisible(false);
+                btnCancelar.setVisible(true);
                 btnaceptartablon.setVisible(true);
                 btnoficomi.setVisible(false);
                 btnofivia.setVisible(false);
@@ -1008,6 +1149,7 @@ public class PrincipalS extends javax.swing.JFrame {
             }
             case 1: {
                 btnaceptartablon.setVisible(false);
+                btnCancelar.setVisible(true);
                 btnmontotablon.setVisible(true);
                 btnoficomi.setVisible(true);
                 btnofivia.setVisible(true);
@@ -1017,6 +1159,7 @@ public class PrincipalS extends javax.swing.JFrame {
             }
             case 2: {
                 btnmontotablon.setVisible(false);
+                btnCancelar.setVisible(false);
                 btnaceptartablon.setVisible(true);
                 btnoficomi.setVisible(false);
                 btnofivia.setVisible(false);
@@ -1075,8 +1218,8 @@ public class PrincipalS extends javax.swing.JFrame {
             this.tablainfo.setModel(modelo);
             try {
                 Statement sentencia = cn.createStatement();
-                ResultSet rs = sentencia.executeQuery("SELECT I.Id_Informe, O.Folio, S.Nombre FROM solicitud S, oficio_comision O, informe I WHERE S.Estado = 'A' AND S.Reporte = '1' AND S.idSolicitud = O.Solicitud_idSolicitud AND I.Solicitud_idSolicitud = S.idSolicitud AND (I.Id_Informe LIKE '%" + txtbusquedasoli2.getText()
-                    + "%' OR O.Folio LIKE '%" + txtbusquedasoli2.getText() + "%' OR S.Nombre LIKE '%" + txtbusquedasoli2.getText() + "%') ");
+                ResultSet rs = sentencia.executeQuery("SELECT I.Id_Informe, O.Folio, S.Nombre FROM solicitud_viatico S, oficio_comision O, informe I WHERE S.Estado = 'A' AND S.Reporte = '1' AND S.idSolicitud = O.Solicitud_idSolicitud AND I.Solicitud_idSolicitud = S.idSolicitud AND (I.Id_Informe LIKE '%" + txtbusquedasoli2.getText()
+                        + "%' OR O.Folio LIKE '%" + txtbusquedasoli2.getText() + "%' OR S.Nombre LIKE '%" + txtbusquedasoli2.getText() + "%') ");
 
                 String solicitud[] = new String[3];
                 while (rs.next()) {
@@ -1105,8 +1248,8 @@ public class PrincipalS extends javax.swing.JFrame {
             try {
                 Statement sentencia = cn.createStatement();
 
-                ResultSet rs = sentencia.executeQuery("SELECT O.Folio, S.Nombre FROM solicitud S, oficio_comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud  AND (O.Folio LIKE '%" + txtbusquedasoli2.getText() + "%'"
-                    + "OR S.Nombre LIKE '%" + txtbusquedasoli2.getText() + "%') ");
+                ResultSet rs = sentencia.executeQuery("SELECT O.Folio, S.Nombre FROM solicitud_viatico S, oficio_comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud  AND (O.Folio LIKE '%" + txtbusquedasoli2.getText() + "%'"
+                        + "OR S.Nombre LIKE '%" + txtbusquedasoli2.getText() + "%') ");
 
                 String solicitud[] = new String[2];
                 while (rs.next()) {
@@ -1124,21 +1267,26 @@ public class PrincipalS extends javax.swing.JFrame {
 
     private void btnnuevaactividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevaactividadActionPerformed
         // TODO add your handling code here:
-        modelo.addRow(new Object[]{"", ""});
+        int filas = tablainfo.getRowCount();
+        if (filas == 0) {
+            modelo.addRow(new Object[]{"", ""});
+        } else if (tablainfo.getValueAt(filas - 1, 0) != "" && tablainfo.getValueAt(filas - 1, 1) != "") {
+            modelo.addRow(new Object[]{"", ""});
+        }
     }//GEN-LAST:event_btnnuevaactividadActionPerformed
 
     private void cmbsoliaceptadasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbsoliaceptadasItemStateChanged
         // TODO add your handling code here:
         switch (cmbsoliaceptadas.getSelectedIndex()) {
             case 0: {
-                Solicitud("SELECT O.Folio, S.Nombre FROM solicitud S, oficio_comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud AND O.Monto != 0");
+                Solicitud("SELECT O.Folio, S.Nombre FROM solicitud_viatico S, oficio_comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud AND O.Monto != 0");
                 btngenerarreporte.setVisible(true);
                 btnconsultarreporte.setVisible(false);
                 i = 0;
                 break;
             }
             case 1: {
-                SolicitudR("SELECT I.Id_Informe, O.FOLIO, S.Nombre FROM solicitud S, oficio_comision O, informe I WHERE S.Estado = 'A' AND S.Reporte = '1' AND S.idSolicitud = O.Solicitud_idSolicitud AND I.Solicitud_idSolicitud = S.idSolicitud AND O.Monto != 0");
+                SolicitudR("SELECT I.Id_Informe, O.FOLIO, S.Nombre FROM solicitud_viatico S, oficio_comision O, informe I WHERE S.Estado = 'A' AND S.Reporte = '1' AND S.idSolicitud = O.Solicitud_idSolicitud AND I.Solicitud_idSolicitud = S.idSolicitud AND O.Monto != 0");
                 btnconsultarreporte.setVisible(true);
                 btngenerarreporte.setVisible(false);
                 i = 1;
@@ -1166,7 +1314,8 @@ public class PrincipalS extends javax.swing.JFrame {
 
     private void btneliminaractividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminaractividadActionPerformed
         // TODO add your handling code here:
-        modelo.removeRow(modelo.getRowCount() - 1);
+        int i = tablainfo.getSelectedRow();
+        modelo.removeRow(i);
     }//GEN-LAST:event_btneliminaractividadActionPerformed
 
     private void btngenerarreporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarreporteActionPerformed
@@ -1191,7 +1340,7 @@ public class PrincipalS extends javax.swing.JFrame {
             try {
                 Statement sentencia = cn.createStatement();
                 String vehiculo = "";
-                ResultSet rs = sentencia.executeQuery("SELECT S.Vehiculo FROM Solicitud S, Oficio_Comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud AND O.Folio = " + folio);
+                ResultSet rs = sentencia.executeQuery("SELECT S.Vehiculo FROM Solicitud_viatico S, Oficio_Comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud AND O.Folio = " + folio);
                 while (rs.next()) {
                     vehiculo = rs.getString("Vehiculo");
                 }
@@ -1210,6 +1359,7 @@ public class PrincipalS extends javax.swing.JFrame {
                 cmbsoliaceptadas.setVisible(false);
                 jlb.setVisible(false);
                 txtbusquedasoli2.setVisible(false);
+                jLabel3.setVisible(true);
             } catch (SQLException ex) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
 
@@ -1236,7 +1386,7 @@ public class PrincipalS extends javax.swing.JFrame {
                 } else {
                     sentencia.execute("INSERT INTO informe (Observaciones,Observaciones_Vehiculo,Solicitud_idSolicitud) VALUES('" + txtobvia.getText() + "',' '," + id + ")");
                 }
-                sentencia.executeUpdate("UPDATE solicitud SET Reporte = '1' WHERE (idSolicitud = " + id + ")");
+                sentencia.executeUpdate("UPDATE solicitud_viatico SET Reporte = '1' WHERE (idSolicitud = " + id + ")");
                 String idInforme = "";
                 ResultSet rs2 = sentencia.executeQuery("SELECT MAX(id_informe) AS id_informe FROM informe");
                 while (rs2.next()) {
@@ -1263,12 +1413,13 @@ public class PrincipalS extends javax.swing.JFrame {
                     txtobvia.enable(false);
                     tablainfo.enable(false);
                 }
+
             } else {
             }
         } catch (SQLException ex) {
             javax.swing.JOptionPane.showMessageDialog(null, "Error al generar reporte");
 
-        } 
+        }
     }//GEN-LAST:event_btnguardarActionPerformed
 
     private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
@@ -1288,34 +1439,110 @@ public class PrincipalS extends javax.swing.JFrame {
             tablainfo.enable(true);
             jlb.setVisible(true);
             txtbusquedasoli2.setVisible(true);
-            Solicitud("SELECT O.Folio, S.Nombre FROM solicitud S, oficio_comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud");
+            jLabel3.setVisible(false);
+            Solicitud("SELECT O.Folio, S.Nombre FROM solicitud_viatico S, oficio_comision O WHERE S.Estado = 'A' AND S.Reporte = '0' AND S.idSolicitud = O.Solicitud_idSolicitud");
         } else {
         }
     }//GEN-LAST:event_btnregresarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int fila=-1;
-        limpiar=false;
-        String id=null;
-        try{
-            fila=tablasolic.getSelectedRow();
+        int fila = -1;
+        limpiar = false;
+        String id = null;
+        try {
+            fila = tablasolic.getSelectedRow();
             tablasolic.clearSelection();
-            CrearPDF pdf=new CrearPDF();
-            if(fila>=0){
-                id=tablasolic.getValueAt(fila, 0).toString();
+            CrearPDF pdf = new CrearPDF();
+            if (fila >= 0) {
+                id = tablasolic.getValueAt(fila, 0).toString();
                 pdf.generarPDFSolicitud(id);
             }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String nuevo=JOptionPane.showInputDialog("Inserte el nombre del nuevo director general");
-        cbd.ejecutar("update Director_General set Nombre='"+nuevo+"'");
+        String nuevo = JOptionPane.showInputDialog("Inserte el nombre del nuevo director general");
+        cbd.ejecutar("update Director_General set Nombre='" + nuevo + "'");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        if (i == 0) {
+            int i = tablon.getSelectedRow();
+            if (i >= 0) {
+                String id = tablon.getValueAt(i, 0).toString();
+                String motivo = javax.swing.JOptionPane.showInputDialog("Motivo");
+                if (motivo == null) {
+
+                } else {
+                    try {
+
+                        Statement sentencia = cn.createStatement();
+
+                        sentencia.executeUpdate("UPDATE solicitud_viatico SET Estado = 'C', Motivo= '" + motivo + "' WHERE (idSolicitud = '" + id + "')");
+                        javax.swing.JOptionPane.showMessageDialog(null, "Solicitud cancelada");
+
+                    } catch (SQLException ex) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
+
+                    } /*catch (ClassNotFoundException e) {
+                     e.printStackTrace();
+                     }//fin del catch
+                     */
+
+                }
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "Seleccionar solicitud");
+            }
+            tablon.setModel(manager_soviaticos.SolicitudP());
+        } else {
+            int i = tablon.getSelectedRow();
+            if (i >= 0) {
+                String folio = tablon.getValueAt(i, 0).toString();
+                String idSolicitud = "";
+                String monto = "";
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+
+                    Statement sentencia = cn.createStatement();
+                    ResultSet rs = sentencia.executeQuery("SELECT Solicitud_idSolicitud, Monto FROM oficio_comision WHERE Folio = '" + folio + "'");
+                    while (rs.next()) {
+                        idSolicitud = rs.getString("Solicitud_idSolicitud");
+                        monto = rs.getString("Monto");
+                    }
+                    int mont = Integer.parseInt(monto);
+                    if (mont == 0) {
+                        String motivo = javax.swing.JOptionPane.showInputDialog("Motivo");
+                        if (motivo == null) {
+
+                        } else {
+                            sentencia.execute("DELETE FROM oficio_comision WHERE (Folio = " + folio + ")");
+                            sentencia.executeUpdate("UPDATE solicitud_viatico SET Estado = 'C', Motivo = '" + motivo + "' WHERE (idSolicitud = " + idSolicitud + ")");
+                            javax.swing.JOptionPane.showMessageDialog(null, "Solicitud cancelada");
+                        }
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(null, "No se puede cancelar solicitud por que se asigno un monto");
+                    }
+
+                } catch (SQLException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }//fin del catch
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "Seleccionar solicitud");
+            }
+
+            tablon.setModel(manager_soviaticos.SolicitudA());
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
     public void Consultar() {
         if (i == 1) {
             int i = tablon.getSelectedRow();
@@ -1329,13 +1556,14 @@ public class PrincipalS extends javax.swing.JFrame {
                         idSolicitud = rs.getString("Solicitud_idSolicitud");
                     }
                     s = new visSolicitudViaticos();
-                    s.IdUsuario(Integer.parseInt(idSolicitud));
+                    s.IdUsuario(Integer.parseInt(idSolicitud), 1, 1);
                 } catch (SQLException ex) {
                     javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
 
                 } /*catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }//fin del catch*/
+                 e.printStackTrace();
+                 }//fin del catch*/
+
                 s.setVisible(true);
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null, "Seleccionar solicitud");
@@ -1345,13 +1573,20 @@ public class PrincipalS extends javax.swing.JFrame {
             if (k >= 0) {
                 int id = Integer.parseInt(tablon.getValueAt(k, 0).toString());
                 s = new visSolicitudViaticos();
-                s.IdUsuario(id);
+                if (i == 0) {
+                    s.IdUsuario(id, 0, 0);
+                }
+                if (i == 2) {
+                    s.IdUsuario(id, 0, 2);
+                }
                 s.setVisible(true);
+
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null, "Seleccionar solicitud");
             }
         }
     }
+
     public void Solicitud(String s) {
         modelo = new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1376,8 +1611,9 @@ public class PrincipalS extends javax.swing.JFrame {
         } catch (SQLException ex) {
             javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
 
-        } 
+        }
     }
+
     public void SolicitudR(String s) {
         modelo = new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1404,8 +1640,9 @@ public class PrincipalS extends javax.swing.JFrame {
         } catch (SQLException ex) {
             javax.swing.JOptionPane.showMessageDialog(null, "Error en la consulta");
 
-        } 
+        }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -1477,6 +1714,7 @@ public class PrincipalS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

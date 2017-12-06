@@ -44,7 +44,7 @@ public class ManagerSoViaticos {
        taso.addColumn("Estado");
             
             //Consulta de los empleados
-            String sql = "select idSolicitud,Fecha_salida,Lugar,Nombre,Actividad,Pernoctado,Vehiculo,Puesto,Fecha_llegada,Estado from solicitud";
+            String sql = "select idSolicitud,Fecha_salida,Lugar,Nombre,Actividad,Pernoctado,Vehiculo,Puesto,Fecha_llegada,Estado from solicitud_viatico";
             //String sql="select * from solicitud_viatico";
             Statement st = cn.createStatement();
             Object datos[] = new Object[10];
@@ -100,22 +100,27 @@ public class ManagerSoViaticos {
        */
        
        public DefaultTableModel SolicitudA() {
-        modelo=new DefaultTableModel();
+        modelo=new DefaultTableModel(){
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        };;
         modelo.addColumn("Folio");
+        modelo.addColumn("Nombre");
         modelo.addColumn("Monto");
         modelo.addColumn("Fecha de salida");
         modelo.addColumn("Fecha de llegada");
         modelo.addColumn("Lugar");
         try {
             //conexion = db.getConexion();
-            String sql="SELECT O.Folio, O.Monto, S.Fecha_salida, S.Fecha_llegada,S.Lugar FROM solicitud S, Oficio_comision O WHERE S.Estado = 'A' AND S.idSolicitud = O.Solicitud_idSolicitud";
+            String sql="SELECT O.Folio, S.Nombre,O.Monto, S.Fecha_salida, S.Fecha_llegada,S.Lugar FROM solicitud_viatico S, Oficio_comision O WHERE S.Estado = 'A' AND S.idSolicitud = O.Solicitud_idSolicitud";
             Statement sentencia = cn.createStatement();
-            Object datos[] = new Object[5];
+            Object datos[] = new Object[6];
             ResultSet rs = sentencia.executeQuery(sql);
             //Llenar tabla
             while (rs.next()) {
 
-                for(int i = 0;i<5;i++){
+                for(int i = 0;i<6;i++){
                     datos[i] = rs.getObject(i+1);
                 }//Llenamos las columnas por registro
 
@@ -133,7 +138,11 @@ public class ManagerSoViaticos {
     }
        
        public DefaultTableModel SolicitudC() {
-        modelo=new DefaultTableModel();
+        modelo=new DefaultTableModel(){
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        };;
         //modelo2 = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("Nombre");
@@ -141,17 +150,18 @@ public class ManagerSoViaticos {
         modelo.addColumn("Fecha de salida");
         modelo.addColumn("Fecha de llegada");
         modelo.addColumn("Lugar");
+        modelo.addColumn("Motivo");
         
         try {
             //conexion = db.getConexion();
             Statement sentencia = cn.createStatement();
 
-            ResultSet rs = sentencia.executeQuery("SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud WHERE Estado = 'C'");
+            ResultSet rs = sentencia.executeQuery("SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar,Motivo FROM solicitud_viatico WHERE Estado = 'C'");
 
-            Object datos[] = new Object[6];
+            Object datos[] = new Object[7];
             while (rs.next()) {
 
-                for(int i = 0;i<6;i++){
+                for(int i = 0;i<7;i++){
                     datos[i] = rs.getObject(i+1);
                 }//Llenamos las columnas por registro
 
@@ -168,7 +178,11 @@ public class ManagerSoViaticos {
     }
        
        public DefaultTableModel SolicitudP() {
-         modelo=new DefaultTableModel();
+         modelo=new DefaultTableModel() {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        };;
         //modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("Nombre");
@@ -178,7 +192,7 @@ public class ManagerSoViaticos {
         modelo.addColumn("Lugar");
 
         try {
-            String sql="SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud WHERE Estado = 'P'";
+            String sql="SELECT idSolicitud, Nombre, Puesto, Fecha_salida, Fecha_llegada,Lugar FROM solicitud_viatico WHERE Estado = 'P'";
             //conexion = db.getConexion();
             Statement sentencia = cn.createStatement();
             ResultSet rs = sentencia.executeQuery(sql);
