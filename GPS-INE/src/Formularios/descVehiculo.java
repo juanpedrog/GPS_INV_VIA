@@ -1,5 +1,6 @@
 package Formularios;
 import Clases.Conexion;
+import Clases.ManagerSoViaticos;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 
@@ -13,13 +14,20 @@ import javax.swing.JOptionPane;
  *
  * @author Juan Pedro Gil
  */
-public class descVehiculo extends javax.swing.JFrame {
-
+public class descVehiculo extends javax.swing.JDialog {
+    ManagerSoViaticos manager_viaticos;
     /**
      * Creates new form descVehiculo
      */
     public descVehiculo() {
         initComponents();
+    }
+    public descVehiculo(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        //maxid();
+        //txtid.setText(varida[0]+1+"");
+        manager_viaticos = new ManagerSoViaticos();
     }
 
     /**

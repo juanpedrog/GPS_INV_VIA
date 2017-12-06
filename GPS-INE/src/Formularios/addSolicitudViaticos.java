@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,6 +35,10 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
         //maxid();
         //txtid.setText(varida[0]+1+"");
         manager_viaticos = new ManagerSoViaticos();
+        ArrayList<String> carros=cbd.acceder("select linea from vehiculos");
+        for(int i=0;i<carros.size();i++){
+            cmb_Vehiculo.addItem(carros.get(i));
+        }
     }
 
     /**
@@ -64,9 +69,13 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
         date_Llegada = new com.toedter.calendar.JDateChooser();
         cmb_Vehiculo = new javax.swing.JComboBox();
         chb_Pernoctado = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
+        txtKilometraje = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDescripcion = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nueva Solicitud");
@@ -121,7 +130,25 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
 
         lblAviso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        cmb_Vehiculo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione vehiculo", "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_Vehiculo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione vehiculo" }));
+        cmb_Vehiculo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                cmb_VehiculoMouseReleased(evt);
+            }
+        });
+        cmb_Vehiculo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cmb_VehiculoPropertyChange(evt);
+            }
+        });
+
+        jLabel9.setText("Kilometraje");
+
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jScrollPane2.setViewportView(txtDescripcion);
+
+        jLabel6.setText("Descripcion");
 
         javax.swing.GroupLayout pn_addInventarioLayout = new javax.swing.GroupLayout(pn_addInventario);
         pn_addInventario.setLayout(pn_addInventarioLayout);
@@ -160,18 +187,32 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
                     .addGroup(pn_addInventarioLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(52, 52, 52)
-                .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pn_addInventarioLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pn_addInventarioLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmb_Vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(127, 127, 127)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addGap(52, 52, 52)
+                        .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pn_addInventarioLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pn_addInventarioLayout.createSequentialGroup()
+                                .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pn_addInventarioLayout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cmb_Vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pn_addInventarioLayout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtKilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(127, 127, 127)))
+                        .addContainerGap(48, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_addInventarioLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
         );
         pn_addInventarioLayout.setVerticalGroup(
             pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,14 +220,8 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pn_addInventarioLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(cmb_Vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pn_addInventarioLayout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(txt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -209,13 +244,28 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8)
-                            .addComponent(txt_Lugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(11, 11, 11)
-                .addComponent(lblAviso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                            .addComponent(txt_Lugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
+                        .addComponent(lblAviso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(pn_addInventarioLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(cmb_Vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtKilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pn_addInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
-        getContentPane().add(pn_addInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
+        getContentPane().add(pn_addInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 930, 330));
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/aceptar.png"))); // NOI18N
@@ -225,7 +275,7 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
                 btnAceptarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, -1, -1));
+        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, -1, -1));
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancelar.png"))); // NOI18N
@@ -235,10 +285,7 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 280, -1, -1));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/formularios.png"))); // NOI18N
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 350));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 370, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -271,9 +318,7 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
         try{
             verificar_excepcion=true;
             validarDatos(true,"");
-            if(cmb_Vehiculo.getSelectedIndex()==0){
-                insertar_Solicitud();
-            }
+            insertar_Solicitud();
         }catch(ExceptionDatosIncompletos e){
             if(verificar_excepcion)JOptionPane.showMessageDialog(this, e.getMessage());
             return;
@@ -285,6 +330,19 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cmb_VehiculoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmb_VehiculoMouseReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cmb_VehiculoMouseReleased
+
+    private void cmb_VehiculoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cmb_VehiculoPropertyChange
+        // TODO add your handling code here:
+        if(cmb_Vehiculo.getSelectedIndex()!=0){
+            txtKilometraje.setEnabled(true);
+            txtDescripcion.setEnabled(true);
+        }
+    }//GEN-LAST:event_cmb_VehiculoPropertyChange
     public void insertar_Solicitud(){
         try{
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -302,6 +360,8 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
             boolean insersion=conexion.ejecutar("insert into Solicitud_viatico (Fecha_Salida,Lugar,Nombre,Actividad,Pernoctado,Vehiculo,Puesto,Fecha_Llegada,Estado,Reporte) values('"+fecha_Salida+"','"+txt_Lugar.getText()+"'"
                 + ",'"+txt_Nombre.getText()+"','"+txt_Actividad.getText()+"','"+pernoctado+"','"+cmb_Vehiculo.getSelectedItem().toString()+"'"
                 + ",'"+txt_Puesto.getText()+"','"+fecha_Llegada+"','P','0')");
+            conexion.ejecutar("insert into viaticos_vehiculos(kilometraje,descripcion,Vehiculos_Matricula) values('"+txtKilometraje.getText()+"','"
+                    + txtDescripcion.getText()+"',(select matricula from vehiculos where linea='"+cmb_Vehiculo.getSelectedItem()+"'))");
             if(insersion){
                 JOptionPane.showMessageDialog(this, "Insersión correcta");
                 this.setVisible(false);
@@ -356,7 +416,12 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
             }
         }*/
         if(cmb_Vehiculo.getSelectedIndex()!=0){
-            new descVehiculo().setVisible(true);
+            if(txtKilometraje.getText().equals("")){
+                cad+="-Asigne el kilometraje al vehiculo";
+            }
+            if(txtDescripcion.getText().equals("")){
+                cad+="-Escriba la descripción del vehiculo";
+            }
         }
         if(txt_Actividad.getText().equals("")){
             if(cad.equals("")){
@@ -456,9 +521,13 @@ public class addSolicitudViaticos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAviso;
     private javax.swing.JPanel pn_addInventario;
+    private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JTextField txtKilometraje;
     private javax.swing.JTextArea txt_Actividad;
     private javax.swing.JTextField txt_Lugar;
     private javax.swing.JTextField txt_Nombre;
